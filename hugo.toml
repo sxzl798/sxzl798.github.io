@@ -12,6 +12,10 @@ theme = "LoveIt"
   # LoveIt theme version
   version = "0.2.X"
 
+[author]
+  name = "黄泽杰"
+
+
 [menu]
   [[menu.main]]
     identifier = "posts"
