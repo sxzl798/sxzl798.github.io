@@ -3,7 +3,7 @@ baseURL = "http://sxzl798.github.io/"
 defaultContentLanguage = "zh-cn"
 # language code
 languageCode = "zh-cn"
-title = "Hzj.org"
+title = "Hzj.blog"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
