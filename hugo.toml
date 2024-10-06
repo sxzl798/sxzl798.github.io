@@ -3,7 +3,7 @@ baseURL = "http://sxzl798.github.io/"
 defaultContentLanguage = "zh-cn"
 # language code
 languageCode = "zh-cn"
-title = "你是永远住在我心里的女孩"
+title = "致我爱的女孩"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
