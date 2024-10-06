@@ -3,7 +3,7 @@ baseURL = "http://sxzl798.github.io/"
 defaultContentLanguage = "zh-cn"
 # language code
 languageCode = "zh-cn"
-title = "Hzj.blog"
+title = "To Lxj From Hzj"
 
 # Change the default theme to be use when building the site with Hugo
 theme = "LoveIt"
@@ -51,3 +51,8 @@ theme = "LoveIt"
   [markup.highlight]
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
+      [markup.goldmark.parser.attribute]
+        block = true
