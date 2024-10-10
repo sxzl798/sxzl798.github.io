@@ -1,0 +1,93 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>数据结构与算法 - 分类 - 黄泽杰Ekko</title>
+        <link>http://sxzl798.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
+        <description>数据结构与算法 - 分类 - 黄泽杰Ekko</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 19 Mar 2024 21:03:46 &#43;0800</lastBuildDate><atom:link href="http://sxzl798.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="self" type="application/rss+xml" /><item>
+    <title>242.有效的字母异位词</title>
+    <link>http://sxzl798.github.io/posts/242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</link>
+    <pubDate>Tue, 19 Mar 2024 21:03:46 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/</guid>
+    <description><![CDATA[使用哈希表方法
+首先，先归纳出无效的字母异位词的两种情况，一是单词的长度不相等，二是两个单词中的字母数量不一一相等 所以，先对比两个字符串的长度，不相等则返回false，再设置一个哈希表，key是单词中的每个字母，value是字母存放的数量，遍历第一组字母，value的默认初始值为0，字母每出现一次，value的值就+1；遍历第二组字母，字母每出现一次，value的值就-1，若key是第一次出现，默认值则为0，value的值为负数 最后，遍历哈希表中每一个value，若出现不等于0 的value，就返回false 代码：
+/* * @lc app=leetcode.cn id=242 lang=java * * [242] 有效的字母异位词 */ // @lc code=start import java.util.HashMap; class Solution { public boolean isAnagram(String s, String t) { //三种情况不会通过，第一种是两个字符串长度不相等，代表两个单词的长度不相同 //第二种是字母的数量不相等 //第三种是有多余的字母 HashMap&lt;Character,Integer&gt; map = new HashMap&lt;Character,Integer&gt;(); int sl = s.length(); int tl = t.length(); if (sl!=tl) { return false; } for(char c : s.toCharArray()){ map.put(c, map.getOrDefault(c,0)+1); } for(char cp : t.toCharArray()){ map.put(cp, map.getOrDefault(cp,0)-1); } for(int n : map.]]></description>
+</item>
+<item>
+    <title>151.最小栈</title>
+    <link>http://sxzl798.github.io/posts/151.%E6%9C%80%E5%B0%8F%E6%A0%88/</link>
+    <pubDate>Tue, 19 Mar 2024 11:49:10 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/151.%E6%9C%80%E5%B0%8F%E6%A0%88/</guid>
+    <description><![CDATA[使用双栈解法
+初始化两个栈，一个stack，一个minStack stack push：minStack的栈顶大于或等于push进来的整型数据，才能push入minStack stack pop：当minStack的栈顶元素与stack pop出去的元素相等时，才pop stack peek：minStack直接peek 代码：
+/* * @lc app=leetcode.cn id=155 lang=java * * [155] 最小栈 */ // @lc code=start import java.util.Stack; class MinStack { private Stack&lt;Integer&gt; stack; private Stack&lt;Integer&gt; minStack; public MinStack() { stack = new Stack&lt;Integer&gt;(); minStack = new Stack&lt;Integer&gt;(); } public void push(int val) { if (minStack.isEmpty() || minStack.peek()&gt;=val) { minStack.push(val); } stack.push(val); } public void pop() { if (minStack.peek().equals(stack.pop())) { minStack.pop(); } } public int top() { return stack.]]></description>
+</item>
+<item>
+    <title>20.有效的括号</title>
+    <link>http://sxzl798.github.io/posts/20.%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</link>
+    <pubDate>Tue, 19 Mar 2024 11:09:29 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/20.%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/</guid>
+    <description><![CDATA[使用哈希表和栈的解法
+哈希表中固定存放以左括号为key，右括号为value的数据，同时存放多一组key和value都为？的数据 实例化一个栈，为避免栈顶出现为空的情况，初始化push一个？，当识别的字符为哈希表中存在的key时，即左括号时，就push入栈，非key即value，右括号时，则弹出栈顶元素，并将其在哈希表中对应的value与当前右括号做对比，相等则不进行任何操作，不相等则不成对，返回false。 由于题目输入的字符只有左右括号，没有？，所以当所有左右括号匹配的情况下，栈底的？一定保持存在，结束时栈的size一定为1. 代码：
+/* * @lc app=leetcode.cn id=20 lang=java * * [20] 有效的括号 */ // @lc code=start import java.util.ArrayDeque; import java.util.Deque; import java.util.HashMap; import java.util.Map; class Solution { public static Map&lt;Character,Character&gt; map = new HashMap&lt;Character,Character&gt;(); public boolean isValid(String s) { map.put(&#39;(&#39;, &#39;)&#39;); map.put(&#39;[&#39;, &#39;]&#39;); map.put(&#39;{&#39;, &#39;}&#39;); map.put(&#39;?&#39;, &#39;?&#39;); Deque&lt;Character&gt; stack0= new ArrayDeque&lt;Character&gt;(); stack0.push(&#39;?&#39;); for(char c : s.toCharArray()){ //寻找是否有左边括号 if (map.containsKey(c)) { //如果存在左边括号，就将其放入栈中 stack0.push(c); //如果是右边括号，将其与栈顶左边括号元素对应的右边括号做对比， //如果是对应的右边括号，则不进行任何操作，否则返回false }else if (map.]]></description>
+</item>
+<item>
+    <title>24.两两交换链表中的节点</title>
+    <link>http://sxzl798.github.io/posts/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</link>
+    <pubDate>Thu, 14 Mar 2024 16:33:18 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/24.%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9/</guid>
+    <description><![CDATA[递归做法
+找到最小重复子问题：即两个节点的交换，同时让第二个节点指向第三个节点 边界条件：当不存在两个节点时，即传入的指针为null，或者指针指向的下一个指针为null时，递归的递结束，归开始 代码：
+/* * @lc app=leetcode.cn id=24 lang=java * * [24] 两两交换链表中的节点 */ // @lc code=start /** * Definition for singly-linked list. * public class ListNode { * int val; * ListNode next; * ListNode() {} * ListNode(int val) { this.val = val; } * ListNode(int val, ListNode next) { this.val = val; this.next = next; } * } */ class Solution { public ListNode swapPairs(ListNode head) { if (head == null||head.]]></description>
+</item>
+<item>
+    <title>206.反转链表</title>
+    <link>http://sxzl798.github.io/posts/206.%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</link>
+    <pubDate>Thu, 14 Mar 2024 16:32:32 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/206.%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8/</guid>
+    <description><![CDATA[双指针做法
+假设原链表为12345null，方向为从左到右，反转的链表则为null12345，方向为从右到左 那么初始化三个指针，即pre = null，cur = head，temp = cur.next，让cur.next = pre 第二轮，即pre = cur，cur = temp，temp = cur.next，让cur.next = pre 整个过程保证cur!=null 代码
+/* * @lc app=leetcode.cn id=206 lang=java * * [206] 反转链表 */ // @lc code=start import java.util.List; /** * Definition for singly-linked list. * public class ListNode { * int val; * ListNode next; * ListNode() {} * ListNode(int val) { this.val = val; } * ListNode(int val, ListNode next) { this.]]></description>
+</item>
+<item>
+    <title>141.环形链表</title>
+    <link>http://sxzl798.github.io/posts/141.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</link>
+    <pubDate>Tue, 12 Mar 2024 20:42:41 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/141.%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8/</guid>
+    <description><![CDATA[快慢指针解法
+设置两个指针，slow指针初始值为0，fast指针初始值为1，slow每次步进为1格，fast每次步进为2格，若链表中存在环，那么slow和fast在不断步进的过程中，一定会相遇，此时两个指针指向的数值会相等，如果fast指针跑向终点都没有和slow相遇，那么此链表就不存在环 代码：
+/* * @lc app=leetcode.cn id=141 lang=java * * [141] 环形链表 */ // @lc code=start import java.util.List; /** * Definition for singly-linked list. * class ListNode { * int val; * ListNode next; * ListNode(int x) { * val = x; * next = null; * } * } */ public class Solution { public boolean hasCycle(ListNode head) { //快慢指针做法 if (head == null || head.next == null) { return false; } ListNode fast = head.]]></description>
+</item>
+<item>
+    <title>15.三数之和</title>
+    <link>http://sxzl798.github.io/posts/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</link>
+    <pubDate>Tue, 12 Mar 2024 20:42:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/15.%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/</guid>
+    <description><![CDATA[双指针解法：
+首先，先对数组进行从大到小的排列，定义三个数，分别是固定指针base，和左右指针left和right，初始状态下，base指向0，左指针在base之后1格，也就是1，右指针则指向length-1的位置 base确定后，将三个数的和与0做比较，如果和大于0，那么right向里进一步，即right&ndash;，如果和小于0，那么left向里进一步，即left++，如果等于0，那么将这三个指针对应的数值存入数组中保存，再进行right&ndash;，left++；无论是right&ndash;还是left++，若出现指针对应的数值和上一个指针的数组一样，那么就要继续向里进一步，避免数值的重复，整个过程中，要保证left&gt;right 当前base循环一轮后，base进行++，一共需要进行length-3轮，如果base指向的数值和上一个base指向的数值是一样的，同样需要进行base++跳过，原因同上 代码：
+/* * @lc app=leetcode.cn id=15 lang=java * * [15] 三数之和 */ // @lc code=start import java.util.ArrayList; import java.util.Arrays; import java.util.List; class Solution { public List&lt;List&lt;Integer&gt;&gt; threeSum(int[] nums) { Arrays.sort(nums); List&lt;List&lt;Integer&gt;&gt; nns = new ArrayList&lt;&gt;(); int l = nums.length; int base = 0; int left; int right; while(base&lt;l){ if (nums[base]&gt;0) { break; } if (base&gt;0&amp;&amp;nums[base] == nums[base-1]) { base++; continue; } left = base+1; right = l-1; while (left&lt;right) { if (nums[base]+nums[left]+nums[right]&lt;0) { do{ left++; if (left&gt;=right) { break; } }while(nums[left]==nums[left-1]); }else if (nums[base]+nums[left]+nums[right]&gt;0) { do{ right--; if (left&gt;=right) { break; } }while(nums[right]==nums[right+1]); }else { List&lt;Integer&gt; ns = new ArrayList&lt;Integer&gt;(); ns.]]></description>
+</item>
+<item>
+    <title>70.爬楼梯问题</title>
+    <link>http://sxzl798.github.io/posts/70.%E7%88%AC%E6%A5%BC%E6%A2%AF%E9%97%AE%E9%A2%98/</link>
+    <pubDate>Wed, 31 Jan 2024 11:45:57 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/70.%E7%88%AC%E6%A5%BC%E6%A2%AF%E9%97%AE%E9%A2%98/</guid>
+    <description><![CDATA[ 利用数学归纳法，找到重复性 进而找到最近 重复 子问题 例如爬楼梯问题，思考到n这一阶的前一步，只有（n-1）和（n-2）两种可能，所以 n = f(n-1)+f(n-2)，这样就把爬楼梯问题简化成为了一个斐波那契数列问题 ]]></description>
+</item>
+<item>
+    <title>算法学习路径</title>
+    <link>http://sxzl798.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/</link>
+    <pubDate>Wed, 31 Jan 2024 11:34:50 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/</guid>
+    <description><![CDATA[ 职业训练：拆分知识点、刻意练习、反馈 将一个技能拆分成多个具体步骤 针对一个步骤进行反复练习 获得对自己表现的不断反馈 即时反馈 主动反馈（自己主动去找优秀的案例，模板进行比对学习） 被动反馈（高手给自己进行指点，code review） 五步刷题法（五毒神掌） 第一遍 5分钟：读题+思考 不会直接看解法：注意！多解法，比较解法优劣 第二遍 马上自己写，然后LeetCode提交 多种解法比较、体会，再进行优化！ 第三遍 过了24小时，再做一遍 根据不同解法的熟练程度，进行专项训练 第四遍 过了一周再做一遍 第五遍 面试前一周恢复性训练 做算法题的最大误区：只做一遍 ]]></description>
+</item>
+</channel>
+</rss>

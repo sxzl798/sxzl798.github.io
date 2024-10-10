@@ -1,7 +1,23 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Categories - 分类 - Hzj 爱 Lxj</title>
+        <title>Categories - 分类 - 黄泽杰Ekko</title>
         <link>http://sxzl798.github.io/categories/</link>
-        <description>Categories - 分类 - Hzj 爱 Lxj</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><atom:link href="http://sxzl798.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
+        <description>Categories - 分类 - 黄泽杰Ekko</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</lastBuildDate><atom:link href="http://sxzl798.github.io/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>渗透测试</title>
+    <link>http://sxzl798.github.io/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>数据结构与算法</title>
+    <link>http://sxzl798.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Tue, 19 Mar 2024 21:03:46 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[]]></description>
+</item>
+</channel>
 </rss>

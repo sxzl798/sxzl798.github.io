@@ -1,0 +1,155 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>hongrisec_1靶场 - 标签 - 黄泽杰Ekko</title>
+        <link>http://sxzl798.github.io/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/</link>
+        <description>hongrisec_1靶场 - 标签 - 黄泽杰Ekko</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</lastBuildDate><atom:link href="http://sxzl798.github.io/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/" rel="self" type="application/rss+xml" /><item>
+    <title>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</title>
+    <link>http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</guid>
+    <description><![CDATA[Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道
+因为ipc只能传文件，不能传流量
+SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯
+当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送
+使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：
+在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器
+通过ipc管道上传文件到域控主机
+shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马
+shell sc \\owa.god.org create test binpath= &#34;cmd.exe /c c:\smb_beacon.exe&#34; 开启服务
+shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道
+link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线
+上线成功，拿到owa，system权限]]></description>
+</item>
+<item>
+    <title>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</guid>
+    <description><![CDATA[Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道
+因为ipc只能传文件，不能传流量
+SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯
+当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送
+使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：
+在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器
+通过ipc管道上传文件到域控主机
+shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马
+shell sc \\owa.god.org create test binpath= &#34;cmd.exe /c c:\smb_beacon.exe&#34; 开启服务
+shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道
+link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线
+上线成功，拿到owa，system权限]]></description>
+</item>
+<item>
+    <title>Part8.AntSword到Cobalt Strike的迁移上线</title>
+    <link>http://sxzl798.github.io/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</guid>
+    <description><![CDATA[Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具
+因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的
+所以接下来就要使用CS或者MSF工具
+MSF——命令操作 CS——图形操作
+安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通
+使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令]]></description>
+</item>
+<item>
+    <title>Part8.AntSword到Cobalt Strike的迁移上线</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</guid>
+    <description><![CDATA[Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具
+因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的
+所以接下来就要使用CS或者MSF工具
+MSF——命令操作 CS——图形操作
+安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通
+使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令]]></description>
+</item>
+<item>
+    <title>Part9.内网横向移动——ipc管道</title>
+    <link>http://sxzl798.github.io/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</guid>
+    <description><![CDATA[Part9.内网横向移动——ipc管道 内网横向移动 横向移动（lateralmovement）已成为现如今网络需要留意的主要威胁之一
+成功的横向移动攻击可以使攻击者闯入用户现有系统，并访问系统资源
+高级持续性威胁（APT）是横向移动带来的最常见网络攻击类型
+如果网络有足够多未保护的漏洞，只要有足够的时间，黑客最终就可以访问域控制器本身
+横向移动就是通过一台电脑从而控制公司的整个电脑
+横向移动的方式众多：
+利用远控工具横向 IPCS横向移动 PTH哈希传递攻击 PTK秘钥传递攻击 PTT票据传递攻击 PSexec工具横向移动 SMB工具横向移动 WinRM命令横向 WMI命令横向移动 横向移动——ipc$ IPC(InternetProcessConnection)共享&quot;命名管道&quot;的资源，是为了实现进程间通信而开放的命名管道
+PC可以通过验证用户名和密码获得相应的权限 通常在远程管理计算机和查看计算机的共享资源时使用 通过ipc$可以与目标机器建立连接 利用这个连接,不仅可以访问目标机器中的文件，进行上传、下载等操作
+还可以在目标机器上运行其他命令以获取标机器的目录结构、用户列表等信息
+直接用cs工具读取域控账号密码 执行建立ipc命令
+shell net use \\192.168.52.138\ipc$ &#34;hongrisec@2020&#34; /user:god\administrator 这里显示这台web服务器和域控主机已经建立了ipc管道，我们用以下命令验证一下
+shell net use 确定web服务器和域控主机已经建立了ipc管道
+由于内网中的域控主机是不连接互联网的，所以我们的渗透电脑是没办法进入对方的网段中的
+所以只能通过内网代理解决这个问题
+接下来建立隧道，让web服务器成为跳板]]></description>
+</item>
+<item>
+    <title>Part9.内网横向移动——ipc管道</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</guid>
+    <description><![CDATA[Part9.内网横向移动——ipc管道 内网横向移动 横向移动（lateralmovement）已成为现如今网络需要留意的主要威胁之一
+成功的横向移动攻击可以使攻击者闯入用户现有系统，并访问系统资源
+高级持续性威胁（APT）是横向移动带来的最常见网络攻击类型
+如果网络有足够多未保护的漏洞，只要有足够的时间，黑客最终就可以访问域控制器本身
+横向移动就是通过一台电脑从而控制公司的整个电脑
+横向移动的方式众多：
+利用远控工具横向 IPCS横向移动 PTH哈希传递攻击 PTK秘钥传递攻击 PTT票据传递攻击 PSexec工具横向移动 SMB工具横向移动 WinRM命令横向 WMI命令横向移动 横向移动——ipc$ IPC(InternetProcessConnection)共享&quot;命名管道&quot;的资源，是为了实现进程间通信而开放的命名管道
+PC可以通过验证用户名和密码获得相应的权限 通常在远程管理计算机和查看计算机的共享资源时使用 通过ipc$可以与目标机器建立连接 利用这个连接,不仅可以访问目标机器中的文件，进行上传、下载等操作
+还可以在目标机器上运行其他命令以获取标机器的目录结构、用户列表等信息
+直接用cs工具读取域控账号密码 执行建立ipc命令
+shell net use \\192.168.52.138\ipc$ &#34;hongrisec@2020&#34; /user:god\administrator 这里显示这台web服务器和域控主机已经建立了ipc管道，我们用以下命令验证一下
+shell net use 确定web服务器和域控主机已经建立了ipc管道
+由于内网中的域控主机是不连接互联网的，所以我们的渗透电脑是没办法进入对方的网段中的
+所以只能通过内网代理解决这个问题
+接下来建立隧道，让web服务器成为跳板]]></description>
+</item>
+<item>
+    <title>Part1.入侵企业的网络思路</title>
+    <link>http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <description><![CDATA[Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141
+该靶场模拟了一般情况下企业的网络配置，非常具有代表性
+红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透]]></description>
+</item>
+<item>
+    <title>Part1.入侵企业的网络思路</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <description><![CDATA[Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141
+该靶场模拟了一般情况下企业的网络配置，非常具有代表性
+红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透]]></description>
+</item>
+<item>
+    <title>Part2.控制192.168.111.128电脑</title>
+    <link>http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</guid>
+    <description><![CDATA[Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试
+找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口
+80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 ]]></description>
+</item>
+<item>
+    <title>Part2.控制192.168.111.128电脑</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</guid>
+    <description><![CDATA[Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试
+找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口
+80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 ]]></description>
+</item>
+</channel>
+</rss>

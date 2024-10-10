@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part1.入侵企业的网络思路 - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part1.入侵企业的网络思路" />
+<meta property="og:description" content="Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141
+该靶场模拟了一般情况下企业的网络配置，非常具有代表性
+红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><meta property="article:section" content="hongrisec_1" />
+<meta property="article:published_time" content="2024-10-10T11:34:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:34:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part1.入侵企业的网络思路"/>
+<meta name="twitter:description" content="Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141
+该靶场模拟了一般情况下企业的网络配置，非常具有代表性
+红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/" /><link rel="prev" href="http://sxzl798.github.io/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/" /><link rel="next" href="http://sxzl798.github.io/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part1.入侵企业的网络思路",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/hongrisec_1\/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8\/"
+        },"genre": "hongrisec_1","keywords": "hongrisec_1靶场","wordcount":  6 ,
+        "url": "http:\/\/sxzl798.github.io\/hongrisec_1\/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8\/","datePublished": "2024-10-10T11:34:24+08:00","dateModified": "2024-10-10T11:34:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Part1.入侵企业的网络思路</h1><div class="content" id="content"><h1 id="part1入侵企业的网络思路">Part1.入侵企业的网络思路</h1>
+<h3 id="靶场介绍">靶场介绍</h3>
+<p>本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141</p>
+<p>该靶场模拟了一般情况下企业的网络配置，非常具有代表性</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091233890.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091233890.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202410091233890.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202410091233890.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091233890.png"
+        title="红日安全团队1号靶场拓扑图" /><h3 id="红队攻击思路概括">红队攻击思路概括</h3>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091225480.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091225480.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202410091225480.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202410091225480.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202410091225480.png"
+        title="红队攻击思路" /><p>通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透</p>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

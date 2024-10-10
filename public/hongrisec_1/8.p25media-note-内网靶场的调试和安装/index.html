@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part6.内网靶场的调试与安装 - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part6.内网靶场的调试与安装" />
+<meta property="og:description" content="Part6.内网靶场的调试与安装 设置dns服务器地址 web服务器的dns要改为域控主机的ip地址
+目前的密码是：
+web服务器：hongri@2020 域控主机：hongri@2024 域内主机：hongri@2020
+检查域内主机 域内主机的dns默认已经是域控主机的ip地址
+00:08:32
+net user 查询用户
+domain 向域控询问
+一共5个域账号 如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号 验证 内网渗透 内网渗透的第一步，是内网信息收集
+systeminfo 当前web服务器主机名为STU1，域账号为Administrator 域为god.org" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/" /><meta property="article:section" content="hongrisec_1" />
+<meta property="article:published_time" content="2024-10-10T11:34:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:34:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part6.内网靶场的调试与安装"/>
+<meta name="twitter:description" content="Part6.内网靶场的调试与安装 设置dns服务器地址 web服务器的dns要改为域控主机的ip地址
+目前的密码是：
+web服务器：hongri@2020 域控主机：hongri@2024 域内主机：hongri@2020
+检查域内主机 域内主机的dns默认已经是域控主机的ip地址
+00:08:32
+net user 查询用户
+domain 向域控询问
+一共5个域账号 如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号 验证 内网渗透 内网渗透的第一步，是内网信息收集
+systeminfo 当前web服务器主机名为STU1，域账号为Administrator 域为god.org"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/" /><link rel="prev" href="http://sxzl798.github.io/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/" /><link rel="next" href="http://sxzl798.github.io/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part6.内网靶场的调试与安装",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/hongrisec_1\/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85\/"
+        },"genre": "hongrisec_1","keywords": "hongrisec_1靶场","wordcount":  23 ,
+        "url": "http:\/\/sxzl798.github.io\/hongrisec_1\/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85\/","datePublished": "2024-10-10T11:34:24+08:00","dateModified": "2024-10-10T11:34:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Part6.内网靶场的调试与安装</h1><div class="content" id="content"><h1 id="part6内网靶场的调试与安装">Part6.内网靶场的调试与安装</h1>
+<h3 id="设置dns服务器地址">设置dns服务器地址</h3>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151143558.webp"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151143558.webp, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151143558.webp 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151143558.webp 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151143558.webp"
+        title="内网靶场的调试和安装PT3M41.773S|内网靶场的调试和安装 - 00:03:41|600" /><p>web服务器的dns要改为域控主机的ip地址</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151144895.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151144895.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151144895.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151144895.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151144895.png"
+        title="image.png" /><p>目前的密码是：</p>
+<p>web服务器：hongri@2020
+域控主机：hongri@2024
+域内主机：hongri@2020</p>
+<h3 id="检查域内主机">检查域内主机</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151155330.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151155330.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151155330.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151155330.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151155330.png"
+        title="image.png" />
+域内主机的dns默认已经是域控主机的ip地址</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151214717.webp"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151214717.webp, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151214717.webp 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151214717.webp 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151214717.webp"
+        title="内网靶场的调试和安装PT8M32.176S 1|内网靶场的调试和安装 - 00:08:32|600" /> <a href="https://www.bilibili.com/video/BV1zT421k7RX?p=25#t=08:32.18" target="_blank" rel="noopener noreffer ">00:08:32</a></p>
+<p>net user 查询用户</p>
+<p>domain 向域控询问</p>
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151217702.webp"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151217702.webp, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151217702.webp 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151217702.webp 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151217702.webp"
+        title="内网靶场的调试和安装PT9M5.582S|内网靶场的调试和安装 - 00:09:05|600" /><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151218298.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151218298.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151218298.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151218298.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151218298.png"
+        title="image.png" />
+一共5个域账号
+如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号
+验证
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151220327.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151220327.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151220327.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151220327.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151220327.png"
+        title="image.png" /></p>
+<h3 id="内网渗透">内网渗透</h3>
+<p>内网渗透的第一步，是内网信息收集</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">systeminfo
+</span></span></code></pre></div><p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151323711.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151323711.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151323711.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151323711.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151323711.png"
+        title="image.png" />
+当前web服务器主机名为STU1，域账号为Administrator
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151325424.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151325424.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151325424.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151325424.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151325424.png"
+        title="image.png" />
+域为god.org</p>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

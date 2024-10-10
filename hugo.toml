@@ -52,7 +52,8 @@ theme = "LoveIt"
     # false is a necessary configuration (https://github.com/dillonzq/LoveIt/issues/158)
     noClasses = false
   [markup.goldmark]
+    [markup.goldmark.renderHooks]
+      [markup.goldmark.renderHooks.image]
+        enableDefault = true
     [markup.goldmark.parser]
       wrapStandAloneImageWithinParagraph = false
-      [markup.goldmark.parser.attribute]
-        block = true

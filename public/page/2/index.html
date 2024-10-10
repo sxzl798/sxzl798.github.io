@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+	<meta name="generator" content="Hugo 0.122.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="黄泽杰Ekko" />
+<meta property="og:description" content="Ekko" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://sxzl798.github.io/" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="黄泽杰Ekko"/>
+<meta name="twitter:description" content="Ekko"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="黄泽杰Ekko">
+    <link rel="feed" href="/index.xml" type="application/rss+xml" title="黄泽杰Ekko"><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "WebSite",
+        "url": "http:\/\/sxzl798.github.io\/","inLanguage": "zh-cn","author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": "Ekko","name": "黄泽杰Ekko"
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page home" data-home="posts"><div class="home-profile"><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"></div></div>
+<article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/">Part4.通过getshell方式修改全局日志，进而控制目标web服务器</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-10-10">2024-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>渗透测试</a></span></div><div class="content">Part4.通过getshell方式修改全局日志，进而控制目标web服务器 渗透工具的选择 针对不同后端编程语言的服务器，有不同的找漏洞方式，从而选择正确的工具
+在此，我们可以使用Wappalyzer来看目前网站所使用的技术栈 根据所得信息，确定该web服务器使用phpMyAdmin框架，决定使用AntSword工具进行渗透
+蚁剑的安装和使用 首先，去github里面下载这两个文件，一个是文件的核心，另一个是文件的启动器 接着，打开启动器exe，第一次启动要选择初始化目录，就选择那个核心文件夹 接着再次打开蚁剑： 这里的网址就填写我们之前新建的baili.php文件 密码就是之前写的一句话木马中POST中的数字 此时右键这个连接，就可以看到我们能进行的操作 双击进去，实际上可以控制这台主机的文件了 但是这样还不够，最好从虚拟终端去控制这台电脑 可以看到这是域管理员账号名 总结，通过以上操作，我们拿到了该web服务器的域账号名和主机账号名</div><div class="post-footer">
+        <a href="/posts/hongrisec_1/6.p23media-note-phpmyadmin%E5%85%A8%E5%B1%80%E6%97%A5%E5%BF%97-getshell/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/">hongrisec_1靶场</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/">Part5.远程开启3389端口，接管目标主机的控制权</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-10-10">2024-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>渗透测试</a></span></div><div class="content">Part5.远程开启3389端口，接管目标主机的控制权 使用蚁剑远程桌面控制对方主机的思路 首先，要远程控制目标主机，需要达成2个条件：
+目标主机需要开启3389端口 拿到目标主机登录所需的账号密码 打开目标主机3389端口 使用命令查看该主机开放的端口
+netstat -ano 发现目标主机本身没有开启3389端口
+使用这条命令打开3389端口
+REG ADD HKLM\SYSTEM\CurrentControlSet\Control\Terminal&#34; &#34;Server /v fDenyTSConnections /t REG_DWORD /d 00000000 /Ff 3389端口打开成功
+再用这条命令关闭主机防火墙
+查看防火墙状态
+netsh firewall show state 显示操作模式，禁用，表示防火墙已关闭
+验证是否可以远程连接桌面 现在已经完成3389端口的打开，还差获取对方这个主机用户的密码
+获取主机用户密码 利用Mimikatz去调取操作系统的less内存
+github下载猕猴桃工具
+再通过蚁剑上传到目标web服务器
+接着在命令行中运行以下命令
+mimikatz.exe &#34;privilege::debug&#34; &#34;sekurlsa::logonPasswords&#34; &#34;exit&#34; 拿到关键信息：
+用户名：god\Administrator 密码：hongrisec@2019 远程桌面登录成功，等同拿到该web服务器的最高控制权
+接下来需要做到权限维持，也就是留后门 之前我们经过了信息收集，漏洞挖掘，跳过了提权获取到该主机的最高权限
+现在，问题就在于如何维持这个权限，而不会被人发现木马而修复漏洞导致我们无法登录</div><div class="post-footer">
+        <a href="/posts/hongrisec_1/7.p24media-note-%E8%BF%9C%E7%A8%8B%E5%BC%80%E5%90%AF3389%E6%8E%A7%E5%88%B6%E7%94%B5%E8%84%91/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/">hongrisec_1靶场</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/">Part6.内网靶场的调试与安装</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-10-10">2024-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>渗透测试</a></span></div><div class="content">Part6.内网靶场的调试与安装 设置dns服务器地址 web服务器的dns要改为域控主机的ip地址
+目前的密码是：
+web服务器：hongri@2020 域控主机：hongri@2024 域内主机：hongri@2020
+检查域内主机 域内主机的dns默认已经是域控主机的ip地址
+00:08:32
+net user 查询用户
+domain 向域控询问
+一共5个域账号 如果web服务器显示出这5个账号，说明该服务器主机已经加入该域中，所以可以提出假设，域内主机一定也能查出这5个账号 验证 内网渗透 内网渗透的第一步，是内网信息收集
+systeminfo 当前web服务器主机名为STU1，域账号为Administrator 域为god.org</div><div class="post-footer">
+        <a href="/posts/hongrisec_1/8.p25media-note-%E5%86%85%E7%BD%91%E9%9D%B6%E5%9C%BA%E7%9A%84%E8%B0%83%E8%AF%95%E5%92%8C%E5%AE%89%E8%A3%85/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/">hongrisec_1靶场</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/">Part7.内网信息收集和定位域控和域内主机</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-10-10">2024-10-10</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>渗透测试</a></span></div><div class="content">Part7.内网信息收集和定位域控和域内主机 查询该域下的账户和主机数量（查不到域控） 查询该域下有多少账户 net user /domain 查询该域下有多少主机 net group &#34;domain computers&#34; /domain 可以看到有3台主机，对应web服务器，域控，域内主机
+根据域内的账户和主机进行初步判断 该主机名为STU1 该账户名为Administrator 该域下有5个账户 域名为god.org 该域下有3台主机 STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH 查找这个域的域控信息 找到域控的ip
+nslookup -type=SRV _ldap._tcp 域控的IP地址：192.168.52.138 域控的全名：owa.god.org（owa就是这个域控的机器名，god.org是域名)
+通过已经控制的web服务器，找到域所在的网段，进而判断域内主机的基本情况 查看web服务器的IP
+ipconfig 公网：192.168.111.128
+内网：192.168.52.143
+可以看到有两个网卡，本地网络的是web服务器本身的IP地址，是连接公网的，所以52.143可以初步判断为连接内网的网卡
+使用以下命令查看52网段下存在的机器
+arp -a 52网段下存在1台52.138，52.138刚好对应上面扫出的域控
+同时，在最开始，我们已经扫出三台主机和一台域控主机
+STU1(web服务器，已被控制) DEV1 ROOT-TVI862UBEH owa ping一下3台主机 + 域控主机，同时将主机名和ip地址对应上
+STU1是本服务器，对应192.168.111.128
+DEV1主机要么不存在，要么已关机 ROOT-TVI862UBEH主机，对应192.168.52.141 owa域控机，对应192.168.52.138 总结信息： 192.168.111.128 STU1（外网：已控制的服务器） 192.168.52.138 owa（内网：域控） 192.168.52.141 ROOT-TVI862UBEH（内网：域内主机） 目标： 渗透进入192.168.52.138 owa（内网：域控）</div><div class="post-footer">
+        <a href="/posts/hongrisec_1/9.p26media-note-%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%92%8C%E5%AE%9A%E4%BD%8D%E6%9C%BA%E5%99%A8/">阅读全文</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/">hongrisec_1靶场</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/">242.有效的字母异位词</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-03-19">2024-03-19</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div><div class="content">使用哈希表方法
+首先，先归纳出无效的字母异位词的两种情况，一是单词的长度不相等，二是两个单词中的字母数量不一一相等 所以，先对比两个字符串的长度，不相等则返回false，再设置一个哈希表，key是单词中的每个字母，value是字母存放的数量，遍历第一组字母，value的默认初始值为0，字母每出现一次，value的值就+1；遍历第二组字母，字母每出现一次，value的值就-1，若key是第一次出现，默认值则为0，value的值为负数 最后，遍历哈希表中每一个value，若出现不等于0 的value，就返回false 代码：
+/* * @lc app=leetcode.cn id=242 lang=java * * [242] 有效的字母异位词 */ // @lc code=start import java.util.HashMap; class Solution { public boolean isAnagram(String s, String t) { //三种情况不会通过，第一种是两个字符串长度不相等，代表两个单词的长度不相同 //第二种是字母的数量不相等 //第三种是有多余的字母 HashMap&lt;Character,Integer&gt; map = new HashMap&lt;Character,Integer&gt;(); int sl = s.length(); int tl = t.length(); if (sl!=tl) { return false; } for(char c : s.toCharArray()){ map.put(c, map.getOrDefault(c,0)+1); } for(char cp : t.toCharArray()){ map.put(cp, map.getOrDefault(cp,0)-1); } for(int n : map.</div><div class="post-footer">
+        <a href="/posts/242.%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/">阅读全文</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/posts/151.%E6%9C%80%E5%B0%8F%E6%A0%88/">151.最小栈</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2024-03-19">2024-03-19</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>数据结构与算法</a></span></div><div class="content">使用双栈解法
+初始化两个栈，一个stack，一个minStack stack push：minStack的栈顶大于或等于push进来的整型数据，才能push入minStack stack pop：当minStack的栈顶元素与stack pop出去的元素相等时，才pop stack peek：minStack直接peek 代码：
+/* * @lc app=leetcode.cn id=155 lang=java * * [155] 最小栈 */ // @lc code=start import java.util.Stack; class MinStack { private Stack&lt;Integer&gt; stack; private Stack&lt;Integer&gt; minStack; public MinStack() { stack = new Stack&lt;Integer&gt;(); minStack = new Stack&lt;Integer&gt;(); } public void push(int val) { if (minStack.isEmpty() || minStack.peek()&gt;=val) { minStack.push(val); } stack.push(val); } public void pop() { if (minStack.peek().equals(stack.pop())) { minStack.pop(); } } public int top() { return stack.</div><div class="post-footer">
+        <a href="/posts/151.%E6%9C%80%E5%B0%8F%E6%A0%88/">阅读全文</a></div>
+</article><ul class="pagination"><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/">1</a>
+                    </span>
+                </li><li class="page-item active">
+                    <span class="page-link">
+                        <a href="/page/2/">2</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/3/">3</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/4/">4</a>
+                    </span>
+                </li></ul></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"data":{"id-1":"时间不在于你拥有多少，而在于你怎样使用"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"]},"duration":-1,"speed":100}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

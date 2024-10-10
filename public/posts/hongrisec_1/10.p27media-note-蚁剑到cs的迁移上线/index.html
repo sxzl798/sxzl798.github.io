@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Part8.AntSword到Cobalt Strike的迁移上线 - 黄泽杰Ekko</title><meta name="Description" content="Ekko"><meta property="og:title" content="Part8.AntSword到Cobalt Strike的迁移上线" />
+<meta property="og:description" content="Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具
+因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的
+所以接下来就要使用CS或者MSF工具
+MSF——命令操作 CS——图形操作
+安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通
+使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-10-10T11:35:24+08:00" />
+<meta property="article:modified_time" content="2024-10-10T11:35:24+08:00" /><meta property="og:site_name" content="Ekko" />
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Part8.AntSword到Cobalt Strike的迁移上线"/>
+<meta name="twitter:description" content="Part8.AntSword到Cobalt Strike的迁移上线 内网渗透 为什么需要Cobalt Strike工具
+因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的
+所以接下来就要使用CS或者MSF工具
+MSF——命令操作 CS——图形操作
+安装Cobalt Strike工具 第一步：需要jdk1.8环境 第二步：打开cs： 管理员权限进入到目标目录下 ip应该选192.168.111.1，这样服务器端web才能ping通
+使用Cobalt Strike工具 生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件 这时候，cs这里已经上线了 在这个输入框中可以执行系统命令"/>
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" /><link rel="prev" href="http://sxzl798.github.io/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/" /><link rel="next" href="http://sxzl798.github.io/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Part8.AntSword到Cobalt Strike的迁移上线",
+        "inLanguage": "zh-cn",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/sxzl798.github.io\/posts\/hongrisec_1\/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF\/"
+        },"genre": "posts","keywords": "hongrisec_1靶场","wordcount":  20 ,
+        "url": "http:\/\/sxzl798.github.io\/posts\/hongrisec_1\/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF\/","datePublished": "2024-10-10T11:35:24+08:00","dateModified": "2024-10-10T11:35:24+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "黄泽杰"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/tags/"> Tags </a><a class="menu-item" href="/categories/"> Categories </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="黄泽杰Ekko">黄泽杰Ekko</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/tags/" title="">Tags</a><a class="menu-item" href="/categories/" title="">Categories</a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Part8.AntSword到Cobalt Strike的迁移上线</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel="author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>黄泽杰</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>渗透测试</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-10-10">2024-10-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;约 20 字&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#内网渗透">内网渗透</a></li>
+        <li><a href="#安装cobalt-strike工具">安装Cobalt Strike工具</a></li>
+        <li><a href="#使用cobalt-strike工具">使用Cobalt Strike工具</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="part8antsword到cobalt-strike的迁移上线">Part8.AntSword到Cobalt Strike的迁移上线</h1>
+<h3 id="内网渗透">内网渗透</h3>
+<p>为什么需要Cobalt Strike工具</p>
+<p>因为虽然Webshell管理工具也可以执行命令，但是在一些操作上实受限的，比如想提权，想扫描想横向，想代理都是不方便的</p>
+<p>所以接下来就要使用CS或者MSF工具</p>
+<p>MSF——命令操作
+CS——图形操作</p>
+<h3 id="安装cobalt-strike工具">安装Cobalt Strike工具</h3>
+<p>第一步：需要jdk1.8环境
+第二步：打开cs：
+管理员权限进入到目标目录下
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151751013.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151751013.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151751013.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151751013.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151751013.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151951843.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151951843.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151951843.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151951843.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151951843.png"
+        title="image.png" />
+ip应该选192.168.111.1，这样服务器端web才能ping通</p>
+<h3 id="使用cobalt-strike工具">使用Cobalt Strike工具</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151956410.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151956410.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151956410.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151956410.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151956410.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957114.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957114.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957114.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957114.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957114.png"
+        title="image.png" />
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957724.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957724.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957724.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957724.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409151957724.png"
+        title="image.png" />
+生成后的后门木马文件放在本地文件夹中，然后再通过AntSword上传文件到服务器，接着在AntSword终端上运行此文件
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152007808.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152007808.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152007808.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152007808.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152007808.png"
+        title="image.png" />
+这时候，cs这里已经上线了
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152008587.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152008587.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152008587.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152008587.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152008587.png"
+        title="image.png" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152030372.png"
+        data-srcset="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152030372.png, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152030372.png 1.5x, https://gitee.com/huangzejie/drawing-bed/raw/master/202409152030372.png 2x"
+        data-sizes="auto"
+        alt="https://gitee.com/huangzejie/drawing-bed/raw/master/202409152030372.png"
+        title="image.png" />
+在这个输入框中可以执行系统命令</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2024-10-10</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" data-title="Part8.AntSword到Cobalt Strike的迁移上线" data-hashtags="hongrisec_1靶场"><i class="fab fa-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" data-hashtag="hongrisec_1靶场"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Hacker News" data-sharer="hackernews" data-url="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" data-title="Part8.AntSword到Cobalt Strike的迁移上线"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 Line" data-sharer="line" data-url="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" data-title="Part8.AntSword到Cobalt Strike的迁移上线"><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://sxzl798.github.io/posts/hongrisec_1/10.p27media-note-%E8%9A%81%E5%89%91%E5%88%B0cs%E7%9A%84%E8%BF%81%E7%A7%BB%E4%B8%8A%E7%BA%BF/" data-title="Part8.AntSword到Cobalt Strike的迁移上线"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hongrisec_1%E9%9D%B6%E5%9C%BA/">hongrisec_1靶场</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/hongrisec_1/11.p28media-note-%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8%E7%9A%84%E6%8A%80%E5%B7%A7%E4%B9%8Bipc%E7%AE%A1%E9%81%93/" class="prev" rel="prev" title="Part9.内网横向移动——ipc管道"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Part9.内网横向移动——ipc管道</a>
+            <a href="/posts/hongrisec_1/12.p29media-note-%E4%BD%BF%E7%94%A8cs%E8%87%AA%E5%B8%A6smb-beacon%E4%B8%8A%E7%BA%BF%E4%B8%8D%E5%87%BA%E7%BD%91%E6%9C%BA%E5%99%A8/" class="next" rel="next" title="Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）">Part10.使用CS自带的SMB Beacon上线内网域控主机（内网穿透）<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2024</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">黄泽杰</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
