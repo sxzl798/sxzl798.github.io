@@ -3,10 +3,10 @@ baseURL = "http://sxzl798.github.io/"
 defaultContentLanguage = "zh-cn"
 # language code
 languageCode = "zh-cn"
-title = "黄泽杰Ekko"
+title = "熵相科技"
 
 # Change the default theme to be use when building the site with Hugo
-theme = "LoveIt"
+theme = "Company"
 
 [params]
   # LoveIt theme version
